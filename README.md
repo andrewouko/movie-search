@@ -40,6 +40,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 API_KEY={OMDB API KEY}
 
 ## Live version of APP
+https://movie-demo-app-081e2e6a8158.herokuapp.com/
 
 
 ## Link to Gitbhub repository
