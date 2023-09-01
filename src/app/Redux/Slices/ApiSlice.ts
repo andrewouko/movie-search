@@ -5,8 +5,8 @@ import { ApiResponse, Details, DetailsResponseBody, Search, SearchResponseBody }
 export const ApiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: `${window.location.origin}/api`,
-    baseUrl: `http://localhost:3000/api`
+    baseUrl: `${window.location.origin}/api`,
+    // baseUrl: `http://localhost:3000/api`
   }),
   endpoints: (build) => ({
     search: build.query<ApiResponse<SearchResponseBody>, Search>({
