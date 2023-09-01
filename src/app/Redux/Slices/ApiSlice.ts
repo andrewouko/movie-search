@@ -2,11 +2,11 @@
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiResponse, Details, DetailsResponseBody, Search, SearchResponseBody } from "../../../../types";
+
 export const ApiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${window.location.origin}/api`,
-    // baseUrl: `http://localhost:3000/api`
+    baseUrl: `/api`,
   }),
   endpoints: (build) => ({
     search: build.query<ApiResponse<SearchResponseBody>, Search>({
@@ -18,7 +18,7 @@ export const ApiSlice = createApi({
           ...(request_body.page && { page: request_body.page.toString() })
         });
         return {
-          url: `/search?${params.toString()}`,
+          url: `search?${params.toString()}`,
         };
       },
       /* transformErrorResponse: (
