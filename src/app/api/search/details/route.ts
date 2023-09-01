@@ -9,7 +9,7 @@ import {
   StatusCodes,
 } from "../../../../../types";
 import { jsonResponse } from "../../../../../lib/utils";
-import sample_response from "../../../../../lib/sample-details-response.json";
+import sample_response from "../../../../../lib/mocks/sample-details-response.json";
 
 export async function GET(req: Request): Promise<NextResponse> {
   const request_body = Object.fromEntries(
@@ -35,7 +35,7 @@ const getDetails = async (request_body: Details): Promise<NextResponse> => {
       ...(process.env.API_KEY && { apikey: process.env.API_KEY }),
     };
 
-    /* const res = await fetch(
+    const res = await fetch(
       "http://www.omdbapi.com?" + new URLSearchParams(params).toString(),
       {
         method: "GET",
@@ -45,10 +45,10 @@ const getDetails = async (request_body: Details): Promise<NextResponse> => {
       }
     );
     const status = (await res.status) as StatusCodes;
-    const data = (await res.json()) as DetailsResponseBody | ApiError; */
+    const data = (await res.json()) as DetailsResponseBody | ApiError;
 
-    const status =  200
-    const data = sample_response
+    /* const status =  200
+    const data = sample_response */
 
     return jsonResponse<DetailsResponseBody | ApiError>(status, data);
   } catch (err: any) {

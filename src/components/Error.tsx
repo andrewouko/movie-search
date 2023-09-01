@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 
 type Props = {

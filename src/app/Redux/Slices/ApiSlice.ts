@@ -21,6 +21,14 @@ export const ApiSlice = createApi({
           url: `/search?${params.toString()}`,
         };
       },
+      /* transformErrorResponse: (
+        response: { status: string | number },
+        meta,
+        arg
+      ) => {
+        console.log(response, meta, arg)
+        return response.status
+      }, */
     }),
     details: build.query<ApiResponse<DetailsResponseBody>, Details>({
       query: (request_body) => {
@@ -32,7 +40,7 @@ export const ApiSlice = createApi({
           url: `/search/details?${params.toString()}`,
         };
       },
-    }),
-  }),
+    })
+  })
 });
 export const { useSearchQuery, useDetailsQuery } = ApiSlice;

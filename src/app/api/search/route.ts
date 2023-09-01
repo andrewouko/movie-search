@@ -1,7 +1,7 @@
 import { isApiError, jsonResponse } from "../../../../lib/utils";
-import sample_response from "../../../../lib/sample-search-response.json";
-import sample_error_response from "../../../../lib/sample-error-response.json";
-import sample_auth_error_response from "../../../../lib/sample-auth-error-response.json";
+import sample_response from "../../../../lib/mocks/sample-search-response.json";
+import sample_error_response from "../../../../lib/mocks/sample-error-response.json";
+import sample_auth_error_response from "../../../../lib/mocks/sample-auth-error-response.json";
 import {
   SearchResponseBody,
   Search,
@@ -40,7 +40,7 @@ const searchOMDBApi = async (request_body: Search): Promise<NextResponse> => {
       ...(process.env.API_KEY && { apikey: process.env.API_KEY }),
     })
 
-    /* const res = await fetch(
+    const res = await fetch(
       "http://www.omdbapi.com?" + params.toString(),
       {
         method: "GET",
@@ -51,17 +51,17 @@ const searchOMDBApi = async (request_body: Search): Promise<NextResponse> => {
     );
     const status = (await res.status) as StatusCodes;
     const data = (await res.json()) as SearchResponseBody | ApiError;
-    if(!isApiError<SearchResponseBody>(data) && data.totalResults) data.totalPages = Math.ceil(Number(data.totalResults) / 10) */
-    const status = 200
+    if(!isApiError<SearchResponseBody>(data) && data.totalResults) data.totalPages = Math.ceil(Number(data.totalResults) / 10)
+    /* const status = 200
     let data: SearchResponseBody
     data = {
       ...sample_response,
       totalPages: Math.ceil(Number(sample_response.totalResults) / 10)
-    }
-    /* const status = 401;
-    // const status = 404;
-    const data = sample_auth_error_response;
-    // const data = sample_error_response; */
+    } */
+    /* // const status = 401;
+    const status = 404;
+    // const data = sample_auth_error_response;
+    const data = sample_error_response; */
     return jsonResponse<SearchResponseBody | ApiError>(status, data);
   } catch (err: any) {
     return jsonResponse(500, (err as Error).message);

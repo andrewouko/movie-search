@@ -1,5 +1,5 @@
 "use client";
-import Card from "@/components/Card";
+import List from "@/components/List";
 import SearchForm from "@/components/SearchForm";
 import {
   Box,
@@ -9,10 +9,8 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Search } from "../../types";
 import React from "react";
 import { useSearchContext } from "../../lib/context/SearchContext";
-import List from "@/components/List";
 
 export default function Home() {
   const { params, setSearchParams } = useSearchContext();

@@ -37,14 +37,14 @@ export default function SearchForm() {
     setSearchParams(data)
   }
   return (
-    
-        <form onSubmit={(handleSubmit(onSubmit))}>
+        <form onSubmit={(handleSubmit(onSubmit))} data-testid={"search-form"}>
           <VStack spacing={5}>
             <FormControl isRequired isInvalid={errors.search ? true : false}>
               <FormLabel>Search</FormLabel>
               <InputGroup>
                 <InputLeftElement>{<BsSearch />}</InputLeftElement>
                 <Input
+                  data-testid={"search-input"}
                   type="search"
                   placeholder="Search movies, series & episodes..."
                   {...register("search")}
@@ -58,6 +58,7 @@ export default function SearchForm() {
               <FormLabel>Content Type</FormLabel>
               <InputGroup>
                 <Select
+                  data-testid={"type-select"}
                   variant="outline"
                   placeholder="Select option"
                   {...register("type")}
@@ -76,11 +77,12 @@ export default function SearchForm() {
               <InputGroup>
                 <InputLeftElement>{<BsCalendar3 />}</InputLeftElement>
                 <Input
+                  data-testid={"year-input"}
                   type="number"
                   min="1900"
                   max="2099"
                   step="1"
-                  placeholder="2023"
+                  placeholder="Enter release year..."
                   {...register("year")}
                 />
               </InputGroup>

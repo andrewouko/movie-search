@@ -10,7 +10,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowUpRight, BsHeart, BsHeartFill } from "react-icons/bs";
 import { SearchResponseItem } from "../../types";
 import { useDetailsContext } from "../../lib/context/DetailsContext";

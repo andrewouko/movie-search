@@ -1,202 +1,216 @@
-'use client'
+"use client";
 
+import ErrorFeedback from "@/components/Error";
 import {
   Box,
-  chakra,
-  Container,
-  Stack,
-  Text,
-  Image,
-  Flex,
-  VStack,
   Button,
+  Container,
+  Flex,
   Heading,
-  SimpleGrid,
-  StackDivider,
-  useColorModeValue,
-  VisuallyHidden,
+  Image,
   List,
   ListItem,
   Progress,
-} from '@chakra-ui/react'
-import { MdLocalShipping } from 'react-icons/md'
-import { useDetailsContext } from '../../../lib/context/DetailsContext';
-import { useDetailsQuery } from '../Redux/Slices/ApiSlice';
-import { useSearchContext } from '../../../lib/context/SearchContext';
-import ErrorFeedback from '@/components/Error';
+  SimpleGrid,
+  Stack,
+  StackDivider,
+  Text,
+  VStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useDetailsContext } from "../../../lib/context/DetailsContext";
+import { useDetailsQuery } from "../Redux/Slices/ApiSlice";
+import React from "react";
+import { Details } from "../../../types";
 
-export default function Details() {
-  const { details, setDetailsParams } = useDetailsContext();
-  const { data: result, error, isLoading, isFetching } = useDetailsQuery(details);
-  const { params, setSearchParams } = useSearchContext();
+export default function MovieDetails() {
+  const { details } = useDetailsContext();
+  const [req, setReq] = React.useState<Details>(details);
+  React.useEffect(() => {
+    setReq(details);
+  }, [details]);
+  const { data: result, error, isLoading, isFetching } = useDetailsQuery(req);
   if (isLoading || isFetching) return <Progress size="lg" isIndeterminate />;
-  if (error) return <ErrorFeedback title={`Error retrieving details`} message={`Please try again later`} />;
-  
+  if (error)
+    return (
+      <ErrorFeedback
+        title={`Error retrieving details`}
+        message={`Please try again later`}
+      />
+    );
+
   return (
-    <Container maxW={'7xl'}>
+    <Container maxW={"7xl"}>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
-        py={{ base: 18, md: 24 }}>
+        py={{ base: 18, md: 24 }}
+      >
         <Flex>
           <Image
-            rounded={'md'}
-            alt={'product image'}
-            src={
-              'https://images.unsplash.com/photo-1596516109370-29001ec8ec36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODE1MDl8MHwxfGFsbHx8fHx8fHx8fDE2Mzg5MzY2MzE&ixlib=rb-1.2.1&q=80&w=1080'
-            }
-            fit={'cover'}
-            align={'center'}
-            w={'100%'}
-            h={{ base: '100%', sm: '400px', lg: '500px' }}
+            rounded={"md"}
+            alt={result?.data.Title}
+            src={result?.data.Poster}
+            fit={"cover"}
+            align={"center"}
+            w={"100%"}
+            h={{ base: "100%", sm: "400px", lg: "500px" }}
           />
         </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
-          <Box as={'header'}>
+          <Box as={"header"}>
             <Heading
               lineHeight={1.1}
               fontWeight={600}
-              fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}>
-              Automatic Watch
+              fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+            >
+              {result?.data.Title}
             </Heading>
             <Text
               // eslint-disable-next-line react-hooks/rules-of-hooks
-              color={useColorModeValue('gray.900', 'gray.400')}
+              color={useColorModeValue("gray.900", "gray.400")}
               fontWeight={300}
-              fontSize={'2xl'}>
-              $350.00 USD
+              fontSize={"2xl"}
+            >
+              {result?.data.Year}
             </Text>
           </Box>
 
           <Stack
             spacing={{ base: 4, sm: 6 }}
-            direction={'column'}
+            direction={"column"}
             divider={
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              <StackDivider borderColor={useColorModeValue('gray.200', 'gray.600')} />
-            }>
+              <StackDivider
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                borderColor={useColorModeValue("gray.200", "gray.600")}
+              />
+            }
+          >
             <VStack spacing={{ base: 4, sm: 6 }}>
               <Text
                 // eslint-disable-next-line react-hooks/rules-of-hooks
-                color={useColorModeValue('gray.500', 'gray.400')}
-                fontSize={'2xl'}
-                fontWeight={'300'}>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore
-              </Text>
-              <Text fontSize={'lg'}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid amet
-                at delectus doloribus dolorum expedita hic, ipsum maxime modi nam officiis
-                porro, quae, quisquam quos reprehenderit velit? Natus, totam.
+                color={useColorModeValue("gray.500", "gray.400")}
+                fontSize={"2xl"}
+                fontWeight={"300"}
+              >
+                {result?.data.Plot}
               </Text>
             </VStack>
             <Box>
               <Text
-                fontSize={{ base: '16px', lg: '18px' }}
+                fontSize={{ base: "16px", lg: "18px" }}
                 // eslint-disable-next-line react-hooks/rules-of-hooks
-                color={useColorModeValue('yellow.500', 'yellow.300')}
-                fontWeight={'500'}
-                textTransform={'uppercase'}
-                mb={'4'}>
-                Features
+                color={useColorModeValue("yellow.500", "yellow.300")}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
+                Production
               </Text>
 
               <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
                 <List spacing={2}>
-                  <ListItem>Chronograph</ListItem>
-                  <ListItem>Master Chronometer Certified</ListItem>{' '}
-                  <ListItem>Tachymeter</ListItem>
+                  <ListItem>{result?.data.Genre}</ListItem>
+                  <ListItem>{result?.data.Language}</ListItem>{" "}
+                  <ListItem>{result?.data.Runtime}</ListItem>
+                  <ListItem>{result?.data.Type.toLocaleUpperCase()}</ListItem>
                 </List>
                 <List spacing={2}>
-                  <ListItem>Anti‑magnetic</ListItem>
-                  <ListItem>Chronometer</ListItem>
-                  <ListItem>Small seconds</ListItem>
+                  <ListItem>{result?.data.Director}</ListItem>
+                  <ListItem>{result?.data.Writer}</ListItem>
+                  <ListItem>{result?.data.Actors}</ListItem>
+                  <ListItem>{result?.data.Country}</ListItem>
                 </List>
               </SimpleGrid>
             </Box>
             <Box>
               <Text
-                fontSize={{ base: '16px', lg: '18px' }}
+                fontSize={{ base: "16px", lg: "18px" }}
                 // eslint-disable-next-line react-hooks/rules-of-hooks
-                color={useColorModeValue('yellow.500', 'yellow.300')}
-                fontWeight={'500'}
-                textTransform={'uppercase'}
-                mb={'4'}>
-                Product Details
+                color={useColorModeValue("yellow.500", "yellow.300")}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
+                Metadata
               </Text>
 
               <List spacing={2}>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Between lugs:
-                  </Text>{' '}
-                  20 mm
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Rated:
+                  </Text>{" "}
+                  {result?.data.Rated}
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Bracelet:
-                  </Text>{' '}
-                  leather strap
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Released:
+                  </Text>{" "}
+                  {result?.data.Released}
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Case:
-                  </Text>{' '}
-                  Steel
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Awards:
+                  </Text>{" "}
+                  {result?.data.Awards}
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Case diameter:
-                  </Text>{' '}
-                  42 mm
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Metascore:
+                  </Text>{" "}
+                  {result?.data.Metascore}
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Dial color:
-                  </Text>{' '}
-                  Black
+                  <Text as={"span"} fontWeight={"bold"}>
+                    IMDB Rating:
+                  </Text>{" "}
+                  {result?.data.imdbRating}
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Crystal:
-                  </Text>{' '}
-                  Domed, scratch‑resistant sapphire crystal with anti‑reflective treatment
-                  inside
+                  <Text as={"span"} fontWeight={"bold"}>
+                    IMDB Votes:
+                  </Text>{" "}
+                  {result?.data.imdbVotes}
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Water resistance:
-                  </Text>{' '}
-                  5 bar (50 metres / 167 feet){' '}
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Box Office:
+                  </Text>{" "}
+                  {result?.data.BoxOffice}{" "}
                 </ListItem>
               </List>
             </Box>
           </Stack>
 
           <Button
-            rounded={'none'}
-            w={'full'}
+            rounded={"none"}
+            w={"full"}
             mt={8}
-            size={'lg'}
-            py={'7'}
+            size={"lg"}
+            py={"7"}
             // eslint-disable-next-line react-hooks/rules-of-hooks
-            bg={useColorModeValue('gray.900', 'gray.50')}
+            bg={useColorModeValue("gray.900", "gray.50")}
             // eslint-disable-next-line react-hooks/rules-of-hooks
-            color={useColorModeValue('white', 'gray.900')}
-            textTransform={'uppercase'}
+            color={useColorModeValue("white", "gray.900")}
+            textTransform={"uppercase"}
             _hover={{
-              transform: 'translateY(2px)',
-              boxShadow: 'lg',
-            }}>
-            Add to cart
+              transform: "translateY(2px)",
+              boxShadow: "lg",
+            }}
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            Back
           </Button>
 
-          <Stack direction="row" alignItems="center" justifyContent={'center'}>
+          {/* <Stack direction="row" alignItems="center" justifyContent={'center'}>
             <MdLocalShipping />
             <Text>2-3 business days delivery</Text>
-          </Stack>
+          </Stack> */}
         </Stack>
       </SimpleGrid>
     </Container>
-  )
+  );
 }
