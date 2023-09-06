@@ -22,6 +22,7 @@ export default function Home() {
       setShowForm(false);
     }
   }, [params]);
+  console.log(params)
   return (
     <Flex
       bg={useColorModeValue("gray.100", "gray.900")}
