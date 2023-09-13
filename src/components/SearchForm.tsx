@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchContext } from "../../lib/context/SearchContext";
+import { useSearchContext } from "@lib/context/SearchContext";
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BsCalendar3, BsSearch } from "react-icons/bs";
-import { Search, SearchSchema } from "../../types";
+import { Search, SearchSchema } from "@lib/types";
 
 type Props = {
     onSubmit: SubmitHandler<Search>

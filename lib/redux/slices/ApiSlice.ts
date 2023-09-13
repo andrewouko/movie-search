@@ -1,7 +1,7 @@
 "use client";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse, Details, DetailsResponseBody, Search, SearchResponseBody } from "../../../../types";
+import { ApiResponse, Details, DetailsResponseBody, Search, SearchResponseBody } from "@lib/types";
 
 export const ApiSlice = createApi({
   reducerPath: "api",

@@ -27,6 +27,8 @@ export enum OMDBResponseType {
   episode = "episode",
 }
 
+// export type OMDBResponseType = "movie" | "series" | "episode";
+
 export const SearchSchema = z.object({
   search: z.string().min(1),
   type: z.nativeEnum(OMDBResponseType).optional(),

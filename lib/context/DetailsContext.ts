@@ -1,5 +1,5 @@
 import React from "react";
-import { Details } from "../../types";
+import { Details } from "@lib/types";
 
 type DetailsContextValue = {
   details: Details;

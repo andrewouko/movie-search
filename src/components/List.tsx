@@ -1,10 +1,10 @@
-import { useSearchQuery } from "@/app/Redux/Slices/ApiSlice";
-import { useSearchContext } from "../../lib/context/SearchContext";
+import { useSearchQuery } from "@lib/redux/slices/ApiSlice";
+import { useSearchContext } from "@lib/context/SearchContext";
 import { Progress, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import Card from "./Card";
 import ErrorFeedback from "./Error";
-import { useDetailsContext } from "../../lib/context/DetailsContext";
+import { useDetailsContext } from "@lib/context/DetailsContext";
 import Pagination from "./Pagination";
 
 type Props = {

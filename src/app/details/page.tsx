@@ -19,10 +19,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { useDetailsContext } from "../../../lib/context/DetailsContext";
-import { useDetailsQuery } from "../Redux/Slices/ApiSlice";
+import { useDetailsContext } from "@lib/context/DetailsContext";
+import { useDetailsQuery } from "@lib/redux/slices/ApiSlice";
 import React from "react";
-import { Details } from "../../../types";
+import { Details } from "@lib/types";
 
 export default function MovieDetails() {
   const { details } = useDetailsContext();

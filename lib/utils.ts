@@ -10,7 +10,7 @@ import {
   SearchSchema,
   StatusCodes,
   ValidationError,
-} from "../types";
+} from "@lib/types";
 import { NextResponse } from "next/server";
 
 export function isApiError<T>(data: T | ApiError): data is ApiError {

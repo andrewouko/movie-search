@@ -1,5 +1,5 @@
 import React from "react";
-import { Search } from "../../types";
+import { Search } from "@lib/types";
 
 type SearchContextValue = {
   params: Search;

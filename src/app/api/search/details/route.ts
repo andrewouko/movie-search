@@ -7,9 +7,9 @@ import {
   DetailsSchema,
   SearchResponseBody,
   StatusCodes,
-} from "../../../../../types";
-import { jsonResponse } from "../../../../../lib/utils";
-import sample_response from "../../../../../lib/mocks/sample-details-response.json";
+} from "@lib/types";
+import { jsonResponse } from "@lib/utils";
+import sample_response from "@lib/mocks/sample-details-response.json";
 
 export async function GET(req: Request): Promise<NextResponse> {
   const request_body = Object.fromEntries(

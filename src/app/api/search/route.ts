@@ -1,14 +1,14 @@
-import { isApiError, jsonResponse } from "../../../../lib/utils";
-import sample_response from "../../../../lib/mocks/sample-search-response.json";
-import sample_error_response from "../../../../lib/mocks/sample-error-response.json";
-import sample_auth_error_response from "../../../../lib/mocks/sample-auth-error-response.json";
+import { isApiError, jsonResponse } from "@lib/utils";
+import sample_response from "@lib/mocks/sample-search-response.json";
+import sample_error_response from "@lib/mocks/sample-error-response.json";
+import sample_auth_error_response from "@lib/mocks/sample-auth-error-response.json";
 import {
   SearchResponseBody,
   Search,
   SearchSchema,
   StatusCodes,
   ApiError,
-} from "../../../../types";
+} from "@lib/types";
 import { NextResponse } from "next/server";
 import { SafeParseReturnType } from "zod";
 

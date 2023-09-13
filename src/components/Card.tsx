@@ -12,8 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsArrowUpRight, BsHeart, BsHeartFill } from "react-icons/bs";
-import { SearchResponseItem } from "../../types";
-import { useDetailsContext } from "../../lib/context/DetailsContext";
+import { SearchResponseItem } from "@lib/types";
+import { useDetailsContext } from "@lib/context/DetailsContext";
 import { useRouter } from 'next/navigation'
 
 export default function Card({

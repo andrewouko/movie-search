@@ -8,6 +8,7 @@ This project is built using NextJs to allow users to query the imdb database and
 3. Chakra UI: for reusable styled components
 4. Tailwinds: for easier styling using classnames
 5. React icons: Icon library
+6. React Hook Form: Form library to aid form management
 
 
 ## Getting Started
@@ -20,12 +21,16 @@ npm install
 yarn install
 ```
 
+Second, build the application:
+
 ```bash
 npm run build
 # or
 yarn build
 ```
 
+
+Lastly, start the application:
 ```bash
 npm run start
 # or

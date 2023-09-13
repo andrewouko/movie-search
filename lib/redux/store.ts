@@ -1,7 +1,7 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import { ApiSlice } from "./Slices/ApiSlice";
+import { ApiSlice } from "@lib/redux/slices/ApiSlice";
 
 const store = configureStore({
   reducer: {

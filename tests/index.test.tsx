@@ -7,11 +7,11 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import { SearchContext } from "../lib/context/SearchContext";
-import { Search } from "../types";
-import { DetailsContext } from "../lib/context/DetailsContext";
+import { SearchContext } from "@lib/context/SearchContext";
+import { OMDBResponseType, Search } from "@lib/types";
+import { DetailsContext } from "@lib/context/DetailsContext";
 import { Provider } from "react-redux";
-import store from "@/app/Redux/store";
+import store from "@lib/redux/store";
 import MovieDetails from "@/app/details/page";
 import preview from 'jest-preview';
 
@@ -32,7 +32,7 @@ describe("Home", () => {
     expect(screen.getByTestId("year-input")).toBeInTheDocument();
   });
   it("renders search results", () => {
-    const params: Search = { search: "batman", type: "movie" };
+    const params: Search = { search: "batman", type: OMDBResponseType.movie};
     const setSearchParams = () => {};
     const details = { imdb_id: "" };
     const setDetailsParams = () => {};
@@ -46,14 +46,14 @@ describe("Home", () => {
       </Provider>
     );
 
-    // preview.debug();
+    preview.debug();
 
     expect(
       container.getElementsByClassName("chakra-heading")[0].innerHTML
     ).toContain('Search results for "batman"');
   });
   it("renders error component", async() => {
-    const params: Search = { search: "batman&&&&!", type: "movie" };
+    const params: Search = { search: "batman&&&&!", type: OMDBResponseType.movie };
     const setSearchParams = () => { };
     const details = { imdb_id: "" };
     const setDetailsParams = () => {};
@@ -75,7 +75,7 @@ describe("Home", () => {
       container.getElementsByClassName("chakra-heading")[0].innerHTML
     ).toContain("Error retrieving movies");
 
-    preview.debug()
+    // preview.debug()
   });
   it("renders details page", async () => {
     const params: Search = { search: "" };

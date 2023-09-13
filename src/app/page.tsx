@@ -10,7 +10,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { useSearchContext } from "../../lib/context/SearchContext";
+import { useSearchContext } from "@lib/context/SearchContext";
 
 export default function Home() {
   const { params, setSearchParams } = useSearchContext();
