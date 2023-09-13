@@ -40,6 +40,8 @@ const searchOMDBApi = async (request_body: Search): Promise<NextResponse> => {
       ...(process.env.API_KEY && { apikey: process.env.API_KEY }),
     })
 
+    // console.log("http://www.omdbapi.com?" + params.toString())
+
     const res = await fetch(
       "http://www.omdbapi.com?" + params.toString(),
       {
