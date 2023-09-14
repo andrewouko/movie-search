@@ -13,7 +13,9 @@ import {
 import { useEffect, useState } from "react";
 import { BsArrowUpRight, BsHeart, BsHeartFill } from "react-icons/bs";
 import { SearchResponseItem } from "@lib/types";
-import { useDetailsContext } from "@lib/context/DetailsContext";
+import { useContextSafely } from "@lib/utils";
+import { DetailsContext } from "@lib/contexts";
+import { useRouter } from "next/navigation";
 
 export default function Card({
   Title,
@@ -23,7 +25,8 @@ export default function Card({
   Type
 }: SearchResponseItem) {
   const [liked, setLiked] = useState<boolean>(false);
-  const { setDetailsParams } = useDetailsContext();
+  const { setDetailsParams } = useContextSafely(DetailsContext);
+  const router = useRouter();
   return (
     <Center py={6}>
       <Box
@@ -76,7 +79,7 @@ export default function Card({
             cursor={"pointer"}
             onClick={() => {
               setDetailsParams({imdb_id: imdbID})
-              window.history.pushState({}, "", "/details")
+              router.push("/details")
             }}
             w="full"
           >

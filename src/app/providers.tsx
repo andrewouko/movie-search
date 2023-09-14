@@ -5,8 +5,7 @@ import { Provider } from "react-redux";
 import store from "@lib/redux/store";
 import React from "react";
 import { Details, Search } from "@lib/types";
-import { SearchContext } from "@lib/context/SearchContext";
-import { DetailsContext } from "@lib/context/DetailsContext";
+import { SearchContext, DetailsContext } from "@lib/contexts";
 
 type Props = {
   children: React.ReactNode;

@@ -111,3 +111,18 @@ export type DetailsResponseBody = {
   Website: string;
   Response: string;
 };
+
+export type DetailsContextValue = {
+  details: Details;
+  setDetailsParams: React.Dispatch<React.SetStateAction<Details>>;
+};
+
+export type SearchContextValue = {
+  params: Search;
+  setSearchParams: React.Dispatch<React.SetStateAction<Search>>;
+};
+
+export type HeadingContextValue = {
+  heading: string;
+  setHeading: React.Dispatch<React.SetStateAction<string>>;
+};

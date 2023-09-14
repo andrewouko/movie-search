@@ -1,25 +1,30 @@
 "use client";
-import List from "@/components/List";
-import SearchForm from "@/components/SearchForm";
 import {
   Box,
-  CloseButton,
   Flex,
   Heading,
   VStack,
-  useColorModeValue,
+  useColorModeValue
 } from "@chakra-ui/react";
+import { HeadingContext, SearchContext } from "@lib/contexts";
+import { useContextSafely } from "@lib/utils";
 import React from "react";
-import { useSearchContext } from "@lib/context/SearchContext";
 
-export default function Home() {
-  const { params, setSearchParams } = useSearchContext();
-  const default_heading = "Find content"
+type Props = {
+  children: React.ReactNode;
+};
+
+export default function SearchLayout({ children }: Props) {
+  const { params } = useContextSafely(SearchContext);
+  const default_heading = "Find content";
   const [heading, setHeading] = React.useState<string>(default_heading);
-  const [showForm, setShowForm] = React.useState<boolean>(true);
+  const [showSmallBox, setShowSmallBox] = React.useState<boolean>(true);
   React.useEffect(() => {
     if (params.search.length > 0) {
-      setShowForm(false);
+      setShowSmallBox(false);
+    } else {
+      setShowSmallBox(true);
+      setHeading(default_heading);
     }
   }, [params]);
   return (
@@ -50,20 +55,11 @@ export default function Home() {
               p={8}
               color={useColorModeValue("gray.700", "whiteAlpha.900")}
               shadow="base"
-              w={[300, 400, showForm ? 500 : 800]}
+              w={[300, 400, showSmallBox ? 500 : 800]}
             >
-              {showForm && <SearchForm />}
-              {!showForm && (
-                <CloseButton
-                  size="lg"
-                  onClick={() => {
-                    setShowForm(true);
-                    setHeading(default_heading)
-                    setSearchParams({search: ""})
-                  }}
-                />
-              )}
-              {!showForm && <List {...{ setHeading, setShowForm }} />}
+              <HeadingContext.Provider value={{ heading, setHeading }}>
+                {children}
+              </HeadingContext.Provider>
             </Box>
           </VStack>
         </Box>

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watchAll --coverage"
+    "test": "jest --watchAll --coverage --verbose"
   },
   "dependencies": {
     "@ajna/pagination": "^1.4.19",

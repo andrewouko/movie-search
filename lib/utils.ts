@@ -5,11 +5,9 @@ import {
   ErrorStatusCodes,
   ErrorTypes,
   StatusCodes,
-  SuccessStatusCodes,
-  ValidationError,
+  SuccessStatusCodes
 } from "@lib/types";
-import { NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import React from "react";
 
 export function isApiError<T>(payload: ErrorTypes | T): payload is ApiError {
   return (payload as ApiError).Error !== undefined;
@@ -30,8 +28,8 @@ export function formatErrorResponse(
   if (isSuccessStatus(status))
     status = ErrorStatusCodes.INTERNAL_SERVER_ERROR;
   if (isApiError(payload)) {
-    if (payload.Error.toLowerCase().includes("not found")) status = 404;
-    if (payload.Error.toLowerCase().includes("incorrect")) status = 400;
+    if (payload.Error.toLowerCase().includes("not found")) status = ErrorStatusCodes.NOT_FOUND;
+    if (payload.Error.toLowerCase().includes("incorrect")) status = ErrorStatusCodes.BAD_REQUEST;
   }
   return {
     status,
@@ -61,4 +59,13 @@ export function jsonResponse<T>(
     },
   });
   return response;
+}
+
+
+export const useContextSafely = <T>(new_context: React.Context<T>) => {
+  const context = React.useContext(new_context);
+  if(context === undefined) {
+      throw new Error(`useContextSafely must be used within a Provider`)
+  }
+  return context;
 }

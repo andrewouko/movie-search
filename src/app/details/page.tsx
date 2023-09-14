@@ -19,13 +19,15 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { useDetailsContext } from "@lib/context/DetailsContext";
 import { useDetailsQuery } from "@lib/redux/slices/ApiSlice";
 import React from "react";
 import { Details } from "@lib/types";
+import { useContextSafely } from "@lib/utils";
+import { DetailsContext } from "@lib/contexts";
 
 export default function MovieDetails() {
-  const { details } = useDetailsContext();
+  const { details } = useContextSafely(DetailsContext);
+  const router = useRouter();
   const [req, setReq] = React.useState<Details>(details);
   React.useEffect(() => {
     setReq(details);
@@ -198,7 +200,7 @@ export default function MovieDetails() {
               boxShadow: "lg",
             }}
             onClick={() => {
-              window.history.back();
+              router.back();
             }}
           >
             Back

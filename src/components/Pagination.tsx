@@ -8,7 +8,6 @@ import {
   PaginationContainer,
   PaginationPageGroup,
 } from "@ajna/pagination";
-import { useSearchContext } from "@lib/context/SearchContext";
 
 type Props = {
   totalPages: number;
