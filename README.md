@@ -9,11 +9,16 @@ This project is built using NextJs to allow users to query the imdb database and
 4. Tailwinds: for easier styling using classnames
 5. React icons: Icon library
 6. React Hook Form: Form library to aid form management
+7. Jest: for frontend and API testing
+8. msw: To aid with mocking http requests for testing
+9. cross-fetch: To add fetching functionality in the jest tests
 
 
 ## Getting Started
 
-First, install the application:
+1. Create you own .env file as described below
+
+2. Install the application:
 
 ```bash
 npm install
@@ -21,7 +26,15 @@ npm install
 yarn install
 ```
 
-Second, build the application:
+3. Test the application:
+
+```bash
+npm run test
+# or
+yarn test
+```
+
+4. If test successful, build the application:
 
 ```bash
 npm run build
@@ -30,7 +43,7 @@ yarn build
 ```
 
 
-Lastly, start the application:
+5. Lastly, start the application:
 ```bash
 npm run start
 # or
@@ -41,7 +54,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 ## Required Environment Variables
-
 API_KEY={OMDB API KEY}
 BASE_URL={Base url of the service e.g. http://localhost:3000}
 
