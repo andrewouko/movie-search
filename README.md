@@ -43,6 +43,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Required Environment Variables
 
 API_KEY={OMDB API KEY}
+BASE_URL={Base url of the service e.g. http://localhost:3000}
 
 ## Live version of APP
 https://movie-demo-app-081e2e6a8158.herokuapp.com/

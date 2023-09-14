@@ -2,23 +2,25 @@ import { NextResponse } from "next/server";
 import { SafeParseReturnType } from "zod";
 import {
   ApiError,
+  ApiResponse,
   Details,
   DetailsResponseBody,
   DetailsSchema,
+  ErrorResponse,
   SearchResponseBody,
   StatusCodes,
 } from "@lib/types";
-import { jsonResponse } from "@lib/utils";
+import { formatErrorResponse, formatResponse, isApiError, jsonResponse } from "@lib/utils";
 import sample_response from "@lib/mocks/sample-details-response.json";
 
-export async function GET(req: Request): Promise<NextResponse> {
+export async function GET(req: Request): Promise<Response> {
   const request_body = Object.fromEntries(
     new URL(req.url).searchParams
   ) as unknown as Details;
   const validation_result = validateRequest(request_body);
   if (!validation_result.success)
-    return jsonResponse(400, validation_result.error.message);
-  return await getDetails(request_body);
+    return jsonResponse(formatErrorResponse(400, validation_result.error.message));
+  return jsonResponse(await getDetails(request_body));
 }
 
 const validateRequest = (
@@ -27,7 +29,7 @@ const validateRequest = (
   return DetailsSchema.safeParse(request_body);
 };
 
-const getDetails = async (request_body: Details): Promise<NextResponse> => {
+const getDetails = async (request_body: Details): Promise<ApiResponse<DetailsResponseBody> | ErrorResponse> => {
   try {
     let params = {
       ...{ i: request_body.imdb_id },
@@ -49,9 +51,12 @@ const getDetails = async (request_body: Details): Promise<NextResponse> => {
 
     /* const status =  200
     const data = sample_response */
+    if(isApiError(data)){
+      return formatErrorResponse(status, data);
+    }
 
-    return jsonResponse<DetailsResponseBody | ApiError>(status, data);
+    return formatResponse<DetailsResponseBody>(status, data);
   } catch (err: any) {
-    return jsonResponse(500, (err as Error).message);
+    return formatErrorResponse(500, (err as Error).message);
   }
 };

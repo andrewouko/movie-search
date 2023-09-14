@@ -30,6 +30,12 @@ export default function MovieDetails() {
   React.useEffect(() => {
     setReq(details);
   }, [details]);
+  const year_txt_color = useColorModeValue("gray.900", "gray.400")
+  const divider_color = useColorModeValue("gray.200", "gray.600")
+  const plot_txt_color = useColorModeValue("gray.500", "gray.400")
+  const title_txt_color = useColorModeValue("yellow.500", "yellow.300")
+  const back_btn_bg_color = useColorModeValue("gray.900", "gray.50")
+  const back_btn_color = useColorModeValue("white", "gray.900")
   const { data: result, error, isLoading, isFetching } = useDetailsQuery(req);
   if (isLoading || isFetching) return <Progress size="lg" isIndeterminate />;
   if (error)
@@ -68,8 +74,7 @@ export default function MovieDetails() {
               {result?.data.Title}
             </Heading>
             <Text
-              // eslint-disable-next-line react-hooks/rules-of-hooks
-              color={useColorModeValue("gray.900", "gray.400")}
+              color={year_txt_color}
               fontWeight={300}
               fontSize={"2xl"}
             >
@@ -82,15 +87,13 @@ export default function MovieDetails() {
             direction={"column"}
             divider={
               <StackDivider
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                borderColor={useColorModeValue("gray.200", "gray.600")}
+                borderColor={divider_color}
               />
             }
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
               <Text
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                color={useColorModeValue("gray.500", "gray.400")}
+                color={plot_txt_color}
                 fontSize={"2xl"}
                 fontWeight={"300"}
               >
@@ -100,8 +103,7 @@ export default function MovieDetails() {
             <Box>
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                color={useColorModeValue("yellow.500", "yellow.300")}
+                color={title_txt_color}
                 fontWeight={"500"}
                 textTransform={"uppercase"}
                 mb={"4"}
@@ -127,8 +129,7 @@ export default function MovieDetails() {
             <Box>
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                color={useColorModeValue("yellow.500", "yellow.300")}
+                color={title_txt_color}
                 fontWeight={"500"}
                 textTransform={"uppercase"}
                 mb={"4"}
@@ -189,10 +190,8 @@ export default function MovieDetails() {
             mt={8}
             size={"lg"}
             py={"7"}
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            bg={useColorModeValue("gray.900", "gray.50")}
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            color={useColorModeValue("white", "gray.900")}
+            bg={back_btn_bg_color}
+            color={back_btn_color}
             textTransform={"uppercase"}
             _hover={{
               transform: "translateY(2px)",

@@ -1,8 +1,19 @@
 import { z } from "zod";
-export type ErrorStatusCodes = 400 | 401 | 403 | 404 | 500;
-export type StatusCodes = ErrorStatusCodes | 200;
+export enum ErrorStatusCodes {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  INTERNAL_SERVER_ERROR = 500
+}
+export enum SuccessStatusCodes {
+  OK = 200,
+  NO_CONTENT = 204,
+  PARTIAL_CONTENT = 206
+}
+export type StatusCodes = ErrorStatusCodes | SuccessStatusCodes;
 export type ApiResponse<T> = {
-  status: 200;
+  status: SuccessStatusCodes;
   data: T;
 };
 export type ApiError = {
@@ -16,9 +27,12 @@ export type ValidationError = Array<{
   path: Array<string>;
   message: string;
 }>;
+
+export type ErrorTypes = ValidationError | ApiError | string;
+
 export type ErrorResponse = {
   status: ErrorStatusCodes;
-  error: ValidationError | ApiError | string;
+  error: ErrorTypes;
 };
 
 export enum OMDBResponseType {

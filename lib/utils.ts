@@ -1,64 +1,64 @@
-import { NextApiRequest } from "next/types";
-import { TypeOf } from "zod";
 import {
   ApiError,
   ApiResponse,
   ErrorResponse,
   ErrorStatusCodes,
-  OMDBResponseType,
-  Search,
-  SearchSchema,
+  ErrorTypes,
   StatusCodes,
+  SuccessStatusCodes,
   ValidationError,
 } from "@lib/types";
+import { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
-export function isApiError<T>(data: T | ApiError): data is ApiError {
-  return (data as ApiError).Error !== undefined;
+export function isApiError<T>(payload: ErrorTypes | T): payload is ApiError {
+  return (payload as ApiError).Error !== undefined;
 }
 
-const setApiErrorReponseStatus = (status: StatusCodes, data: ApiError): ErrorStatusCodes => {
-  if(data.Error.toLowerCase().includes("not found"))
-    return 404
-  if(data.Error.toLowerCase().includes("incorrect"))
-    return 400
-  return status as ErrorStatusCodes
+function isSuccessStatus(status: StatusCodes): status is SuccessStatusCodes {
+  return (
+    status === SuccessStatusCodes.OK ||
+    status === SuccessStatusCodes.NO_CONTENT ||
+    status === SuccessStatusCodes.PARTIAL_CONTENT
+  );
 }
 
-function formatResponse<T>(
+export function formatErrorResponse(
   status: StatusCodes,
-  data: T | ApiError | string
-): ApiResponse<T> | ErrorResponse {
-  if (typeof data === "string" && status !== 200) {
-    try {
-      data = JSON.parse(data);
-    } catch (err) {}
-    return {
-      status,
-      error: data as ValidationError | string
-    }
-  }
-  if (typeof data !== "string" && isApiError<T>(data)){
-    status = setApiErrorReponseStatus(status, data)
-    return {
-      status,
-      error: data,
-    };
+  payload: ErrorTypes
+): ErrorResponse {
+  if (isSuccessStatus(status))
+    status = ErrorStatusCodes.INTERNAL_SERVER_ERROR;
+  if (isApiError(payload)) {
+    if (payload.Error.toLowerCase().includes("not found")) status = 404;
+    if (payload.Error.toLowerCase().includes("incorrect")) status = 400;
   }
   return {
-    status: 200,
-    data: data as T,
+    status,
+    error: payload,
+  };
+}
+
+export function formatResponse<T>(
+  status: StatusCodes,
+  payload: T
+): ApiResponse<T> {
+  if(!isSuccessStatus(status)) status = SuccessStatusCodes.OK;
+  return {
+    status,
+    data: payload,
   };
 }
 
 export function jsonResponse<T>(
-  status: StatusCodes,
-  data: T | ApiError | string
-): NextResponse {
-  const response = formatResponse<T>(status, data);
-  return NextResponse.json(response, { status: response.status });
-}
-
-export interface SearchRequest extends NextApiRequest {
-  body: TypeOf<typeof SearchSchema>;
+  payload: ApiResponse<T> | ErrorResponse
+): Response {
+  const responseBody = JSON.stringify(payload);
+  const response = new Response(responseBody, {
+    status: payload.status,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response;
 }
